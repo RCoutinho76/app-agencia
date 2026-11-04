@@ -1,0 +1,87 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: on-failure
+    environment:
+      - POSTGRES_USER=agency
+      - POSTGRES_PASSWORD=agency_dev_password
+      - POSTGRES_DB=agency
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U agency -d agency"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 5s
+
+  api:
+    image: node:22-alpine
+    restart: on-failure
+    working_dir: /workspace/server
+    command:
+      - sh
+      - -ec
+      - |
+        npm ci --no-audit --no-fund
+        exec npm run dev
+    volumes:
+      - ${BASE44_PROJECT_ROOT:-.}:/workspace
+      - api_node_modules:/workspace/server/node_modules
+    environment:
+      - PORT=3001
+      - DATABASE_URL=postgres://agency:agency_dev_password@db:5432/agency
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3001/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  web:
+    image: node:22-alpine
+    restart: on-failure
+    working_dir: /workspace/client
+    command:
+      - sh
+      - -ec
+      - |
+        npm ci --no-audit --no-fund
+        exec npm run dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ${BASE44_PROJECT_ROOT:-.}:/workspace
+      - web_node_modules:/workspace/client/node_modules
+    environment:
+      - __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS
+      - VITE_API_PROXY_TARGET=http://api:3001
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3000/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+volumes:
+  db_data:
+  api_node_modules:
+  web_node_modules:
