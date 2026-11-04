@@ -1,11 +1,14 @@
 import express from 'express';
 import { initDb, pool } from './db.js';
 import { catalog } from './catalog.js';
+import { initSchema } from './schema.js';
+import { domainRouter } from './domain.js';
 
 const app = express();
 const port = Number(process.env.PORT || 3001);
 
-app.use(express.json());
+app.use(express.json({ limit: '20mb' }));
+app.use('/api', domainRouter);
 
 app.get('/api/health', async (_req, res) => {
   try {
@@ -68,6 +71,7 @@ app.post('/api/quotes', async (req, res) => {
 });
 
 await initDb();
+await initSchema();
 
 app.listen(port, '0.0.0.0', () => {
   console.log(`API listening on http://0.0.0.0:${port}`);
