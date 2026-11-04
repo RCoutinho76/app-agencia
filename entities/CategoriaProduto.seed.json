@@ -1,0 +1,6 @@
+[
+  { "nome": "Passagens Aéreas", "descricao": "Voos nacionais e internacionais", "icone": "Plane",   "ordem": 1, "ativo": true },
+  { "nome": "Hotéis",           "descricao": "Hospedagem em redes e boutiques", "icone": "Hotel",   "ordem": 2, "ativo": true },
+  { "nome": "Aluguel de Carros","descricao": "Locadoras parceiras",             "icone": "Car",     "ordem": 3, "ativo": true },
+  { "nome": "Pacotes",          "descricao": "Roteiros fechados",               "icone": "Package", "ordem": 4, "ativo": true }
+]

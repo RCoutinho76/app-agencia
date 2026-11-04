@@ -1,0 +1,12 @@
+{
+  "name": "CategoriaProduto",
+  "type": "object",
+  "properties": {
+    "nome": { "type": "string" },
+    "descricao": { "type": "string" },
+    "icone": { "type": "string", "enum": ["Plane", "Hotel", "Car", "Package"], "default": "Package" },
+    "ordem": { "type": "number", "default": 0 },
+    "ativo": { "type": "boolean", "default": true }
+  },
+  "required": ["nome", "ativo"]
+}

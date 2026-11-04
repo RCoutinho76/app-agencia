@@ -1,0 +1,22 @@
+{
+  "name": "EtapaRoteiro",
+  "type": "object",
+  "properties": {
+    "roteiro_id": { "type": "string", "description": "id de Roteiro" },
+    "dia_numero": { "type": "number", "minimum": 1 },
+    "data": { "type": "string", "format": "date" },
+    "ordem": { "type": "number", "default": 1 },
+    "titulo": { "type": "string" },
+    "descricao": { "type": "string" },
+    "tipo": {
+      "type": "string",
+      "enum": ["voo", "hotel", "carro", "passeio", "refeicao", "traslado", "outro"],
+      "default": "outro"
+    },
+    "horario": { "type": "string", "description": "HH:mm" },
+    "imagem": { "type": "string", "description": "URL da imagem" },
+    "voucher_url": { "type": "string", "description": "URL do arquivo do voucher" },
+    "voucher_codigo": { "type": "string" }
+  },
+  "required": ["roteiro_id", "dia_numero", "data", "ordem", "titulo", "tipo"]
+}

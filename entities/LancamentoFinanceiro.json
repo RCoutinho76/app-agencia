@@ -1,0 +1,15 @@
+{
+  "name": "LancamentoFinanceiro",
+  "type": "object",
+  "properties": {
+    "cliente_id": { "type": "string", "description": "id de Cliente" },
+    "roteiro_id": { "type": "string", "description": "id de Roteiro (opcional)" },
+    "categoria_id": { "type": "string", "description": "id de CategoriaProduto" },
+    "item_comprado": { "type": "string" },
+    "valor_total_venda": { "type": "number", "minimum": 0 },
+    "comissao_liquida": { "type": "number", "minimum": 0 },
+    "data_venda": { "type": "string", "format": "date" },
+    "contrato_fechado": { "type": "boolean", "default": true }
+  },
+  "required": ["cliente_id", "categoria_id", "item_comprado", "valor_total_venda", "comissao_liquida", "data_venda", "contrato_fechado"]
+}
