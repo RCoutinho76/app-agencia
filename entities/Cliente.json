@@ -1,0 +1,36 @@
+{
+  "name": "Cliente",
+  "type": "object",
+  "properties": {
+    "nome_completo": { "type": "string", "minLength": 3, "description": "Nome completo do cliente" },
+    "data_nascimento": { "type": "string", "format": "date" },
+    "cpf": {
+      "type": "string",
+      "pattern": "^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$",
+      "description": "Formato 000.000.000-00"
+    },
+    "celular": { "type": "string", "description": "Formato (00) 00000-0000" },
+    "email": { "type": "string", "format": "email" },
+    "passaporte_numero": { "type": "string" },
+    "passaporte_validade": { "type": "string", "format": "date" },
+    "vistos": {
+      "type": "array",
+      "description": "Vistos ativos, cada um com sua própria validade",
+      "default": [],
+      "items": {
+        "type": "object",
+        "properties": {
+          "pais": {
+            "type": "string",
+            "enum": ["EUA", "Canadá", "Austrália", "Japão", "China", "Reino Unido", "Espaço Schengen", "Outros"]
+          },
+          "validade": { "type": "string", "format": "date" },
+          "descricao": { "type": "string", "description": "Obrigatório na prática quando pais = Outros" }
+        },
+        "required": ["pais", "validade"]
+      }
+    },
+    "observacoes": { "type": "string" }
+  },
+  "required": ["nome_completo", "data_nascimento", "cpf", "celular", "email"]
+}
