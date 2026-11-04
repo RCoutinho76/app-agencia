@@ -1,0 +1,21 @@
+{
+  "name": "Roteiro",
+  "type": "object",
+  "properties": {
+    "cliente_id": { "type": "string", "description": "id de Cliente" },
+    "titulo": { "type": "string" },
+    "destino": { "type": "string" },
+    "data_ida": { "type": "string", "format": "date" },
+    "data_volta": { "type": "string", "format": "date" },
+    "imagem_capa": { "type": "string", "description": "URL da imagem (upload)" },
+    "status": {
+      "type": "string",
+      "enum": ["rascunho", "enviado", "aprovado", "cancelado"],
+      "default": "rascunho"
+    },
+    "data_aprovacao": { "type": "string", "format": "date-time" },
+    "valor_total": { "type": "number", "minimum": 0 },
+    "observacoes_cliente": { "type": "string" }
+  },
+  "required": ["cliente_id", "titulo", "destino", "data_ida", "data_volta", "status"]
+}

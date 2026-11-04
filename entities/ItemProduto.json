@@ -1,0 +1,12 @@
+{
+  "name": "ItemProduto",
+  "type": "object",
+  "properties": {
+    "categoria_id": { "type": "string", "description": "id de CategoriaProduto" },
+    "nome": { "type": "string" },
+    "fornecedor": { "type": "string" },
+    "descricao": { "type": "string" },
+    "ativo": { "type": "boolean", "default": true }
+  },
+  "required": ["categoria_id", "nome", "ativo"]
+}
